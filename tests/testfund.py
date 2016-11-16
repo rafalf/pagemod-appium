@@ -52,10 +52,8 @@ class TestFund(unittest.TestCase):
         eggsforfood.open_test_fundraising()
 
 
-
-
 if __name__ == "__main__":
     suite = unittest.TestSuite()
-    suite.addTest(TestFund("testSearch"))
+    suite.addTest(TestFund("TestFund"))
     runner = unittest.TextTestRunner()
     runner.run(suite)

@@ -31,10 +31,7 @@ class Page(unittest.TestCase):
         self.config = config
         self.locators = locators
 
-    def take_screenshot(self, file_name, count=1):
-
-        for i in range(count):
-            self.driver.save_screenshot(os.path.join(self.config['screenshot_path'], file_name + str(i)))
-            time.sleep(0.5)
+    def take_screenshots(self, file_name):
+        self.driver.save_screenshot(os.path.join(self.config['screenshot_path'], file_name))
 
 
