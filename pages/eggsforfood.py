@@ -22,7 +22,6 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from page import Page
 
-URL_FUNDRAISING = 'https://rafalf.github.io/ammado/test/2016/09/25/test-fundraising-widget.html'
 WAIT_TIME = 10
 
 
@@ -36,30 +35,34 @@ class EggsForFood(Page, unittest.TestCase):
         self.action = TouchAction(self.driver)
 
     def open_test_fundraising(self):
-        self.driver.get(URL_FUNDRAISING)
+        self.driver.get(self.config.get('fund_test_url'))
 
     def wait_test_page_loaded(self):
         try:
             WebDriverWait(self.driver, WAIT_TIME).until(EC.presence_of_element_located((By.ID, 'testUrl')),
-                                                    message='element not found: testUrl')
+                                                        'element not found: testUrl')
         except TimeoutException as e:
             self.fail(e)
 
     def enter_test_url(self, url):
-        self.driver.find_element_by_id('testUrl').send_key(url)
+        self.get_element_by_id('testUrl').send_keys(url)
 
     def enter_entity_type(self, entity_type):
-        self.driver.find_element_by_id('entityType').send_key(entity_type)
+        self.get_element_by_id('entityType').send_keys(entity_type)
 
     def enter_entity_id(self, entity_id):
-        self.driver.find_element_by_id('entityID').send_key(entity_id)
+        self.get_element_by_id('entityID').send_keys(entity_id)
 
-    def set_test_site(self, url, entity_type, entity_id):
-        self.wait_test_page_loaded()
-        self.enter_test_url(url)
+    def set_test_site(self, entity_type, entity_id, campaign=None):
+        self.enter_test_url(self.config.get('test_site'))
         self.enter_entity_type(entity_type)
         self.enter_entity_id(entity_id)
+        if campaign:
+            self.get_element_by_id().send_keys()
 
-        el = self.driver.find_element_by_id('submit')
-        self.action.tap(el).perform()
+        el = self.get_element_by_id('submit')
+        el.click()
+
+    def select_start_fundraising(self):
+        self.get_element_by_id('ammadoStartFundraising').click()
 

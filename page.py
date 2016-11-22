@@ -19,6 +19,7 @@ from selenium.common.exceptions import NoSuchElementException
 from appium import webdriver
 from appium.webdriver.common.touch_action import TouchAction
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 import os
@@ -31,7 +32,23 @@ class Page(unittest.TestCase):
         self.config = config
         self.locators = locators
 
-    def take_screenshots(self, file_name):
-        self.driver.save_screenshot(os.path.join(self.config['screenshot_path'], file_name))
+    def take_screenshot(self, file_name):
+        self.driver.save_screenshot(os.path.join(self.config['temp_path'], file_name))
+
+    def get_element_by_css(self, selector):
+
+        try:
+            return WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((
+                By.CSS_SELECTOR, selector)), 'element timed out: %s' % selector)
+        except TimeoutException as e:
+            self.fail(e)
+
+    def get_element_by_id(self, selector):
+
+        try:
+            return WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((
+                By.ID, selector)), 'element timed out: %s' % selector)
+        except TimeoutException as e:
+            self.fail(e)
 
 

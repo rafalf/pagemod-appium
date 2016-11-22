@@ -21,13 +21,11 @@ PATH = lambda y: os.path.join(RWD, y)
 
 def get_conf():
 
-    dict_conf = {}
     with open(PATH('data.conf'), 'r') as file_hdlr:
         return {l.split('=')[0]: l.split('=')[1].strip() for l in file_hdlr}
 
 
 def get_locators():
 
-    dict_locator = {}
     with open(PATH('locator.txt'), 'r') as file_hdlr:
          return {l.split('=')[0]: l.split('=')[1].strip() for l in file_hdlr}

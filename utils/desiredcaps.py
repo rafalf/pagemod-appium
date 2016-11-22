@@ -13,15 +13,16 @@
 # limitations under the License.
 
 
-def get_capabilities():
+def get_capabilities(platform='ios'):
 
-    return {
-        'browserName': 'safari',
-        'platformName': 'iOS',
-        'platformVersion': '10.1',
-        'nativeWebTap': True,
-        'automationName': 'XCUITest',
-        'newCommandTimeout': '120',  # timeout for a new command
-        'noReset': True
-    }
-
+    if platform == 'ios':
+        return {
+            'browserName': 'safari',
+            'deviceName': 'iPhone 6',
+            'platformName': 'iOS',
+            'platformVersion': '10.1',
+            'nativeWebTap': True,
+            'automationName': 'XCUITest',
+            'newCommandTimeout': '120',  # timeout for a new command
+            'noReset': True
+        }
